@@ -13,7 +13,8 @@ namespace HelloiPhone
 		public override void ViewDidLoad ()
 		{
 			base.ViewDidLoad ();
-			// Perform any additional setup after loading the view, typically from a nib.
+			int count = 0;
+			button.TouchUpInside += (object sender, EventArgs e) => label.Text = String.Format("Count: {0}", ++count);
 		}
 
 		public override void DidReceiveMemoryWarning ()
