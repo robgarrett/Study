@@ -1,0 +1,18 @@
+{<% var ngVer = "1.3.0" %>
+  "name": "<%= _.slugify(_.humanize(appname)) %>",
+  "version": "0.0.0",
+  "dependencies": {
+    "angular": "^<%= ngVer %>",
+    "bootstrap": "^3.2.0",
+    "angular-resource": "^<%= ngVer %>",
+  },
+  "overrides": {
+    "bootstrap": {
+      "main": [
+        "less/bootstrap.less",
+        "dist/css/bootstrap.css",
+        "dist/js/bootstrap.js"
+      ]
+    }
+  }
+}
