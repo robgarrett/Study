@@ -10,9 +10,9 @@ var mkdirp = require('mkdirp');
 var AngularLightGenerator = yeoman.generators.Base.extend({
 	preinit: function() {
 		this.pkg = require('../package.json');
-  		this.sourceRoot(path.join(__dirname, '../templates'));	
+  		this.sourceRoot(path.join(__dirname, '../templates'));
 	},
-	
+
 	scaffoldFolders: function() {
 		mkdirp("app", function (err) {
     		if (err) console.error(err)
@@ -20,10 +20,10 @@ var AngularLightGenerator = yeoman.generators.Base.extend({
 	},
 	copyMainFiles: function() {
 		this.copy("root/_bowerrc", ".bowerrc");
-		this.copy("root/_package.json", "package.json");
-		this.copy("root/_bower.json", "bower.json");
 		this.copy("root/_yo-rc.json", "yo-rc.json");
 		this.copy("root/_gitignore", ".gitignore");
+		this.template("root/_bower.json", "bower.json");
+		this.template("root/_package.json", "package.json");
 	},
 });
 
