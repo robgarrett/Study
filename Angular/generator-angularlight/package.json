@@ -4,21 +4,27 @@
   "description": "Light-weight Angular App",
   "author": "Rob Garrett",
   "files": [
-    "app", 
+    "app",
     "templates"
   ],
-  "keywords": ["yeoman-generator", "app", "angular"],
+  "keywords": [
+    "yeoman-generator",
+    "app",
+    "angular"
+  ],
   "dependencies": {
-    "yeoman-generator": "*",
-    "chalk": "*",
-    "mkdirp": "*"
+    "chalk": "^1.0.0",
+    "mkdirp": "^0.5.1",
+    "yeoman-generator": "^0.16.0"
   },
   "devDependencies": {
-    "grunt": "*",
-    "grunt-contrib-connect": "*",
-    "grunt-contrib-concat": "*",
-    "grunt-contrib-cssmin": "*",
-    "underscore.string": "*"
+    "grunt": "^0.4.5",
+    "grunt-contrib-jshint": "^0.11.0",
+    "grunt-conventional-github-releaser": "^0.2.0",
+    "grunt-release": "^0.11.0",
+    "load-grunt-tasks": "^3.1.0",
+    "semver": "^4.3.0",
+    "underscore.string": "^3.0.3"
   },
   "main": "app/index.js",
   "engines": {
