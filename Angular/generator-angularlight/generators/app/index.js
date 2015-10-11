@@ -6,10 +6,11 @@ var path = require('path');
 var yeoman = require('yeoman-generator');
 var chalk = require('chalk');
 var mkdirp = require('mkdirp');
+var scriptBased = require('../../script-base.js');
 
 var AngularLightGenerator = module.exports = function Generator(args, options) {
 	// Call base version
-	yeoman.generators.Base.apply(this, arguments);
+	yeoman.generators.NamedBase.apply(this, arguments);
 	// Get the app name
 	this.argument('appname', { type: String, required: false });
 	this.appname = this.appname || path.basename(process.cwd());
@@ -27,14 +28,13 @@ var AngularLightGenerator = module.exports = function Generator(args, options) {
 		// Install dependencies.
 		this.installDependencies({
 			skipInstall: false,
-			skipMessage: false
-		});
-		// ...and we're finished.
-		console.log("Finished");
+			skipMessage: false,
+			callback: this._finished.bind(this)
+		});		
 	});
 };
 	
-util.inherits(AngularLightGenerator, yeoman.generators.Base);
+util.inherits(AngularLightGenerator, yeoman.generators.NamedBase);
 
 AngularLightGenerator.prototype.scaffoldFolders = function() {
 	// Make folders in the app.
@@ -61,4 +61,9 @@ AngularLightGenerator.prototype.copyAppFiles = function() {
 	this.template("app/styles/main.css", "app/styles/main.css");
 	this.template("app/views/main.html", "app/views/main.html");
 	//this.template("app/views/view.html", "app/views/view.html");	
+};
+
+AngularLightGenerator.prototype._finished = function() {
+	// ...and we're finished.
+	console.log("Finished");
 };
