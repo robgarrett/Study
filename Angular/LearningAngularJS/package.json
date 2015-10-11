@@ -1,0 +1,10 @@
+{
+  "name": "learning-angularjs",
+  "version": "1.0.0",
+  "description": "Examples from Learning AngularJS for .NET Developers",
+  "author": "Rob Garrett",
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-connect": "^0.2.0"
+  }
+}
