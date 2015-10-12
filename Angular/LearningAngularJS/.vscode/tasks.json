@@ -1,12 +1,12 @@
 {
     "version": "0.1.0",
-    "command": "grunt",
+    "command": "gulp",
     "isShellCommand": true,
     "tasks": [
         {
-            "taskName": "connect:example",
-            "isBuildCommand": false,
-            "showOutput": "always"
+            "taskName": "webserver",
+            "args": [],
+            "isBuildCommand": true
         }
     ]
 }
