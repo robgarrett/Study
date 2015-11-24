@@ -2,14 +2,15 @@
   "name": "helloworld",
   "version": "1.0.0",
   "description": "Hello World Typescript Application",
-  "main": "scripts/HelloWorld.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "npm run test-gulp",
+    "test-gulp": "gulp default"
   },
   "author": "Rob Garrett",
   "license": "ISC",
   "devDependencies": {
     "gulp": "^3.9.0",
-    "gulp-typescript": "^2.9.2"
+    "gulp-sourcemaps": "^1.6.0",
+    "gulp-tsb": "^1.7.4"
   }
 }
