@@ -12,8 +12,12 @@
             "problemMatcher": "$tsc"
         },
         {
-            "taskName": "less",
-            "problemMatcher": "$lessCompile"
+            "taskName": "buildTests",
+            "problemMatcher": "$tsc"
+        },
+        {
+            "taskName": "buildAll",
+            "problemMatcher": ["$tsc"]
         },
         {
             "taskName": "test",
@@ -21,17 +25,8 @@
             "isTestCommand": true
         },
         {
-            "taskName": "buildTests",
-            "problemMatcher": "$tsc"
-        },
-        {
-            "taskName": "buildAll",
-            "problemMatcher": ["$tsc", "$lessCompile"]
-        },
-        {
             "taskName": "watch",
-            "problemMatcher": ["$tsc", "$lessCompile"]
+            "problemMatcher": ["$tsc"]
         }
-        
     ]
 }
