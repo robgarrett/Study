@@ -24,12 +24,10 @@ if ($webApp -eq $null) {
     New-AzureRMWebApp -Name $global:webAppName -Location $global:location -ResourceGroup $global:rgName -AppServicePlan "$($global:webAppName)-ASP";    
 }
 
+$webApp = Get-AzureRmWebApp -ResourceGroupName $global:rgName -Name $global:webAppName -ErrorAction SilentlyContinue;
 Write-Host -ForegroundColor Yellow "WebSite Address is: http://$($webApp.EnabledHostNames[0])";
 if ((Get-AzureRmWebAppSlot -ResourceGroupName $global:rgName -Name $global:webAppName -Slot "staging" -ErrorAction SilentlyContinue) -eq $null) {
     Write-Verbose "Creating Staging Slot";
     New-AzureRmWebAppSlot -ResourceGroupName $global:rgName -Name $global:webAppName -Slot "staging" -AppServicePlan "$($global:webAppName)-ASP";
 }
 
-Write-Verbose "Running a test swap with staging";
-$ParametersObject = @{targetSlot  = "production"}
-Invoke-AzureRmResourceAction -ResourceGroupName $global:rgName -ResourceType Microsoft.Web/sites/slots -ResourceName "$($global:webAppName)/staging" -Action slotsswap -Parameters $ParametersObject;
