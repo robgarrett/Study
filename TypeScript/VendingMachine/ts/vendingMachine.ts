@@ -1,4 +1,6 @@
 /// <reference path="./coin.ts" />
+/// <reference path="typings/knockout.d.ts" />
+
 class VendingMachine {
     private paid = ko.observable(0);
     acceptedCoins: Quarter[] = [new Quarter()];
