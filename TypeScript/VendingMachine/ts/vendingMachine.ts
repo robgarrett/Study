@@ -23,7 +23,7 @@ export class VendingMachine {
     private paid = ko.observable(0);
     cells = ko.observableArray([]);
     selectedCell = ko.observable(new Cell(new Init()));
-    acceptedCoins: Coins.Coin[] = [new Coins.Dime(), new Coins.Quarter(), new Coins.Half(), new Coins.Dollar()];
+    acceptedCoins: Array<Coins.Coin> = [new Coins.Dime(), new Coins.Quarter(), new Coins.Half(), new Coins.Dollar()];
     canPay = ko.pureComputed(() => this.paid() - this.selectedCell().product.price >= 0);
 
     set size(givenSize: VendingMachineSize) {
