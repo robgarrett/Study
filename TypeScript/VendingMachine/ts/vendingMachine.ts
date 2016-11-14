@@ -1,9 +1,8 @@
-/// <reference path="coin.ts" />
-/// <reference path="product.ts" />
-/// <reference path="productFactory.ts" />
-/// <reference path="typings/knockout.d.ts" />
+import { Product, Initial as Init } from "./product";
+import getVendingProduct from "./productFactory";
+import * as Coins from "./coin";
 
-enum VendingMachineSize {
+export enum VendingMachineSize {
     small = 6,
     medium = 9,
     large = 12
@@ -12,7 +11,7 @@ enum VendingMachineSize {
 class Cell {
     // Use of public in the constructor instructs TS
     // to create a public field of same name
-    constructor(public product: CocaCola) {
+    constructor(public product: Product) {
 
     }
 
@@ -20,17 +19,17 @@ class Cell {
     sold = ko.observable(false);
 }
 
-class VendingMachine {
+export class VendingMachine {
     private paid = ko.observable(0);
     cells = ko.observableArray([]);
-    selectedCell = ko.observable(new Cell(new CocaCola()));
-    acceptedCoins: Quarter[] = [new Quarter()];
+    selectedCell = ko.observable(new Cell(new Init()));
+    acceptedCoins: Coins.Coin[] = [new Coins.Dime(), new Coins.Quarter(), new Coins.Half(), new Coins.Dollar()];
     canPay = ko.pureComputed(() => this.paid() - this.selectedCell().product.price >= 0);
 
     set size(givenSize: VendingMachineSize) {
         this.cells([]);
         for (let index = 0; index < givenSize; index++) {
-            let product = productFactory.GetProduct();
+            let product = getVendingProduct();
             this.cells.push(new Cell(product));
         }
     }
@@ -40,7 +39,7 @@ class VendingMachine {
         this.selectedCell(cell);
     }
 ı
-    acceptCoin = (coin: Quarter) : void => {
+    acceptCoin = (coin: Coins.Coin) : void => {
         // In arrow functions 'this' is the containing object
         // In non-arrow functions 'this' is the caller class of this method.
         let oldTotal = this.paid();
