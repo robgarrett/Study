@@ -1,0 +1,28 @@
+{
+  "name": "hello-world",
+  "version": "1.0.0",
+  "description": "Simple Hello World NodeJS app that has all the trimmings.",
+  "main": "dist/index.js",
+  "author": "Rob Garrett",
+  "scripts": {
+    "main": "gulp serve",
+    "test": "gulp build && mocha"
+  },
+  "devDependencies": {
+    "@types/chai": "^3.4.34",
+    "@types/mocha": "^2.2.33",
+    "chai": "^3.5.0",
+    "gulp": "^3.9.1",
+    "gulp-istanbul": "^1.1.1",
+    "gulp-mocha": "^3.0.1",
+    "gulp-sourcemaps": "^1.9.1",
+    "gulp-tslint": "^7.0.1",
+    "gulp-typescript": "^3.1.3",
+    "gulp-util": "^3.0.7",
+    "ts-loader": "^1.2.2",
+    "tslint": "^4.0.2",
+    "typescript": "^2.0.10",
+    "webpack-dev-server": "^1.16.2",
+    "webpack-stream": "^3.2.0"
+  }
+}

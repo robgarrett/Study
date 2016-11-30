@@ -1,0 +1,10 @@
+
+# Ignore build files
+dist
+.vscode/chrome
+
+# Ignore node_modules
+node_modules
+
+# Ignore coverage reports
+coverage
