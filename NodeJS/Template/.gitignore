@@ -36,11 +36,15 @@ jspm_packages
 # Optional REPL history
 .node_repl_history
 
-#Webstorm
+# Webstorm
 .idea
 
-#prod build
+# prod build
 dist
 
-#mock db
+# mock db
 db.json
+
+# Mac files
+**/.DS_Store
+
