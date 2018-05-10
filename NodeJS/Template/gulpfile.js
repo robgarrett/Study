@@ -29,7 +29,10 @@ gulp.task('watchrun', function () {
 });
 
 // ** Compilation ** //
-gulp.task('build', ['compile:typescript']);
+gulp.task('build', ['nsp:check', 'compile:typescript']);
+gulp.task('nsp:check', function(){
+  'nsp check';
+});
 gulp.task('compile:typescript', function () {
   return gulp
   .src(paths.tscripts.src)
