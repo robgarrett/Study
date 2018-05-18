@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "prestart": "node lib/startMessage.js",
-    "start": "gulp run",
+    "start": "gulp buildrun",
     "build": "gulp build",
     "lint": "gulp lint",
     "test": "gulp build && mocha"

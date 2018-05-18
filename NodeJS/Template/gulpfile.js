@@ -34,10 +34,10 @@ gulp.task('nsp:check', function(){
   'nsp check';
 });
 gulp.task('compile:typescript', function () {
-  return gulp
-  .src(paths.tscripts.src)
-  .pipe(tsc({
-    emitError: false
+  return gulp.src(paths.tscripts.src)
+    .pipe(tsc({
+      lib: ["es6"],
+      emitError: false
   }))
   .pipe(gulp.dest(paths.tscripts.dest));
 });
