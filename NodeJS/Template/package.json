@@ -1,0 +1,35 @@
+{
+  "name": "js-dev-environment",
+  "version": "1.0.0",
+  "description": "Started JS environment",
+  "main": "index.js",
+  "scripts": {
+    "prestart": "node lib/startMessage.js",
+    "start": "gulp run",
+    "build": "gulp build",
+    "lint": "gulp lint",
+    "test": "gulp build && mocha"
+  },
+  "author": "Rob Garrett",
+  "license": "MIT",
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "chalk": "^2.4.1",
+    "eslint": "^4.19.1",
+    "eslint-plugin-import": "^2.11.0",
+    "eslint-watch": "^3.1.4",
+    "express": "^4.16.3",
+    "gulp": "^3.9.1",
+    "gulp-shell": "^0.6.5",
+    "gulp-tsc": "^1.3.2",
+    "gulp-tslint": "^8.1.3",
+    "mocha": "^5.1.1",
+    "npm-run-all": "^4.1.3",
+    "nsp": "^3.2.1",
+    "open": "0.0.5",
+    "run-sequence": "^2.2.1",
+    "tslint": "^5.10.0",
+    "typescript": "^2.8.3"
+  },
+  "dependencies": {}
+}
