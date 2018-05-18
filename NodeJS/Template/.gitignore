@@ -48,3 +48,5 @@ db.json
 # Mac files
 **/.DS_Store
 
+# Transpiled files.
+lib/*.js
