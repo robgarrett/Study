@@ -3,6 +3,8 @@ var tsc    = require('gulp-tsc');
 var shell  = require('gulp-shell');
 var runseq = require('run-sequence');
 var tslint = require('gulp-tslint');
+var webpack = require('webpack');
+var webpackconfig = require('./webpack.config.dev.js');
 
 var paths = {
   tscripts : { src : ['src/**/*.ts'], dest : 'lib' }
@@ -48,4 +50,18 @@ gulp.task('lint:default', function(){
       return gulp.src(paths.tscripts.src)
         .pipe(tslint({ formatter: "verbose"}))
         .pipe(tslint.report());
+});
+
+// ** Packaging ** //
+gulp.task('package', ['lint', 'package:code']);
+gulp.task('package:code', ['build'], function (done) {
+  webpack(webpackconfig, function (err, stats) {
+    if (err) {
+      console.error("package:code", err);
+    }
+    console.log(stats.toString({
+      colors: true
+    }));
+    done();
+  });
 });
