@@ -3,6 +3,7 @@
 		"node_modules": true,
 		"**/.git": true,
 		"**/.DS_Store": true,
-		"**/*.js": { "when": "$(basename).ts"} // Hide compiles JS
+    "**/*.js": { "when": "$(basename).ts"}, // Hide compiles JS
+    "editor.minimap.enabled": false
 	}
 }
