@@ -40,7 +40,7 @@ jspm_packages
 .idea
 
 # prod build
-dist
+app/dist
 
 # mock db
 db.json
@@ -49,4 +49,4 @@ db.json
 **/.DS_Store
 
 # Transpiled files.
-lib/*.js
+app/lib/*.js
