@@ -1,26 +1,34 @@
-var gulp = require('gulp');
-var tsc = require('gulp-typescript');
-var gulpNSP = require('gulp-nsp');
-var exec = require('gulp-exec');
-var tslint = require('gulp-tslint');
-var flatten = require('gulp-flatten');
-var clean = require('gulp-clean');
-var webpack = require('webpack');
-var webpackconfig = require('./webpack.config.dev.js');
+'use strict';
+
+import path from "path";
+import gulp from "gulp";
+import tsc from "gulp-typescript";
+import gulpNSP from "gulp-nsp";
+import debug from "gulp-debug";
+import exec from "gulp-exec";
+import tslint from "gulp-tslint";
+import flatten from "gulp-flatten";
+import clean from "gulp-clean";
+import webpack from "webpack";
+import webpackconfig from "./webpack.config.dev.js";
 
 var paths = {
   tscripts: {
     src: [
       'app/src/**/*.ts',
       'app/serve/**/*.ts'
-    ], dest: 'app/lib'
+    ],
+    dest: 'app/lib',
+    dist: 'app/dist'
   }
 };
 
 // ** Clean ** /
 gulp.task('clean', function doWork() {
-  return gulp.src(paths.tscripts.dest + '/*.js', {read:false})
-    .pipe(clean());
+  return gulp.src([
+    paths.tscripts.dest, '/*.js',
+    paths.tscripts.dist, '/*.js'
+  ], {read:false}).pipe(clean());
 });
 
 // ** Linting ** //
