@@ -9,8 +9,6 @@ import exec from "gulp-exec";
 import tslint from "gulp-tslint";
 import flatten from "gulp-flatten";
 import clean from "gulp-clean";
-import webpack from "webpack";
-import webpackconfig from "./webpack.config.dev.js";
 
 var paths = {
   tscripts: {
@@ -18,8 +16,7 @@ var paths = {
       'app/src/**/*.ts',
       'app/serve/**/*.ts'
     ],
-    dest: 'app/lib',
-    dist: 'app/dist'
+    dest: 'app/lib'
   }
 };
 
@@ -27,8 +24,7 @@ var paths = {
 gulp.task('clean', function doWork() {
   return gulp.src([
     paths.tscripts.dest, '/*.js',
-    paths.tscripts.dist, '/*.js'
-  ], {read:false}).pipe(clean());
+  ], {read:false, allowEmpty: true}).pipe(clean());
 });
 
 // ** Linting ** //
@@ -62,16 +58,6 @@ gulp.task('watch:code', function doWork() {
   return watcher = gulp.watch(paths.tscripts.src, gulp.series('compile:typescript'));
 });
 gulp.task('watch', gulp.parallel('watch:code'));
-
-// ** Packaging ** //
-gulp.task('package:code', gulp.series('build', function (done) {
-  webpack(webpackconfig, function (err, stats) {
-    if (err) { console.error("package:code", err); }
-    console.log(stats.toString({ colors: true }));
-    done();
-  });
-}));
-gulp.task('package', gulp.series('lint', 'package:code'));
 
 // ** Default ** //
 gulp.task('default', gulp.series('lint', 'buildrun'));
