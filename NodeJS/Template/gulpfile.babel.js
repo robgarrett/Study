@@ -14,7 +14,8 @@ var paths = {
   tscripts: {
     src: [
       'app/src/**/*.ts',
-      'app/serve/**/*.ts'
+      'app/serve/**/*.ts',
+      'webpack.config.dev.ts'
     ],
     dest: 'app/lib'
   }
