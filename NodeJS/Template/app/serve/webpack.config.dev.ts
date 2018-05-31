@@ -1,9 +1,8 @@
-import path from "path";
+import * as path from "path";
+import * as webpack from "webpack";
 
 export default {
-  debug: true,
   devtool: "inline-source-map",
-  noInfo: false,  // Show files bundled.
   entry: [
     path.resolve(__dirname, "src/index"),
   ],
@@ -16,7 +15,8 @@ export default {
     publicPath: "/",
     filename: "bundle.js",
   },
-  plugins: [],
+  plugins: [
+  ],
   module: {
     rules: [
       // Add rules here to process typescript into our
