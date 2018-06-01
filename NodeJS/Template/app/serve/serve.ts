@@ -11,7 +11,7 @@ const compiler = webpack(config);
 
 // Use web pack compiler to bundle.
 app.use(webpackMiddleware(compiler, {
-  publicPath: config.output.publicPath
+  publicPath: config.output.publicPath,
 }));
 
 app.get("/", function(req, res) {
