@@ -10,6 +10,7 @@ import flatten from "gulp-flatten";
 import clean from "gulp-clean";
 import sourcemaps from "gulp-sourcemaps";
 import { spawn } from "child_process";
+import * as browserSync from "browser-sync";
 
 // Running node instance.
 var node;
@@ -54,10 +55,11 @@ gulp.task('compile:typescript', function doWork() {
     .pipe(flatten())
     .pipe(gulp.dest(paths.tscripts.dest));
 });
-gulp.task('build', gulp.series('clean', 'nsp:check', 'compile:typescript'));
+gulp.task('build', gulp.series('clean', /*'nsp:check',*/ 'compile:typescript'));
 
 // ** Running ** //
 gulp.task('run', function doWork(done) {
+  // Start express so we can serve pages.
   if (node) node.kill();
   node = spawn('node', ['app/lib/serve.js'], { stdio: 'inherit' });
   node.on('close', function (code) {
@@ -75,7 +77,7 @@ gulp.task('watch:coderun', function doWork() {
   return gulp.watch(paths.tscripts.src, gulp.series('compile:typescript', 'run'));
 });
 gulp.task('watch', gulp.series('watch:code'));
-gulp.task('runwatch', gulp.series('run', 'watch:coderun'));
+gulp.task('runwatch', gulp.series('buildrun', 'watch:coderun'));
 
 // ** Default ** //
 gulp.task('default', gulp.series('lint', 'buildrun'));

@@ -1,6 +1,5 @@
 import * as express from "express";
 import * as path from "path";
-import * as open from "open";
 import * as webpack from "webpack";
 import * as webpackMiddleware from "webpack-dev-middleware";
 import config from "./webpack.config.dev";
@@ -19,9 +18,5 @@ app.get("/", function(req, res) {
 });
 
 app.listen(port, function(err) {
-  if (err) {
-    console.log(err);
-  } else {
-    open("http://localhost:" + port);
-  }
+  if (err) { console.log(err); }
 });
