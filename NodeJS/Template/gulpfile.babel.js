@@ -9,8 +9,8 @@ import tslint from "gulp-tslint";
 import flatten from "gulp-flatten";
 import clean from "gulp-clean";
 import sourcemaps from "gulp-sourcemaps";
-import { spawn } from "child_process";
-import * as browserSync from "browser-sync";
+import browserSync from "browser-sync";
+import nodemon from "nodemon";
 
 // Running node instance.
 var node;
@@ -57,32 +57,46 @@ gulp.task('compile:typescript', function doWork() {
 });
 gulp.task('build', gulp.series('clean', /*'nsp:check',*/ 'compile:typescript'));
 
-// ** Running ** //
-gulp.task('run', function doWork(done) {
-  // Start express so we can serve pages.
-  if (node) node.kill();
-  node = spawn('node', ['app/lib/serve.js'], { stdio: 'inherit' });
-  node.on('close', function (code) {
-    if (code === 8) gulp.log('Error detected, waiting on changes...');
+// ** Serve **
+gulp.task('serve', function doWork(done) {
+  // Launch express (using nodemon to monitor app/lib/*.js).
+  var called = false;
+  // Use nodemon to run express app.
+  // Restart our server whenever code changes.
+  return nodemon({
+    script: "app/lib/serve.js",
+    ignore: ["node_modules/"]
+  }).on("start", function () {
+    if (!called) {
+      called = true;
+      done();
+    }
+  }).on("restart", function () {
+    // When nodemon restarts the server, instruct browsersync to reload.
+    debug.log("nodemon detected change, calling browsersync to reload");
+    setTimeout(function () {
+      browserSync.reload({ stream: false})
+    }, 1000);
   });
-  return done();
 });
-gulp.task('buildrun', gulp.series('build', 'run'));
 
-// ** Watching ** //
-gulp.task('watch:code', function doWork() {
+// ** Watching **
+gulp.task('watch', function doWork(){
+  // If src files change, recompile them.
+  // This will cause new app/lib/*.js files, and nodemon will pick these up and
+  // restart express.
   return gulp.watch(paths.tscripts.src, gulp.series('compile:typescript'));
 });
-gulp.task('watch:coderun', function doWork() {
-  return gulp.watch(paths.tscripts.src, gulp.series('compile:typescript', 'run'));
-});
-gulp.task('watch', gulp.series('watch:code'));
-gulp.task('runwatch', gulp.series('buildrun', 'watch:coderun'));
+
+// ** Browser Sync **
+gulp.task('browser-sync', gulp.series("serve", function doWork() {
+  // Initialize browser sync.
+  browserSync({
+    proxy: "localhost:3000",  // local node app address
+    port: 5000,  // use *different* port than above
+    notify: true
+  });
+}));
 
 // ** Default ** //
-gulp.task('default', gulp.series('lint', 'buildrun'));
-
-// Kill node process on unhandled error.
-process.on('exit', function () {
-  if (node) node.kill();
-});
+gulp.task('default', gulp.series('lint', 'build', 'browser-sync', 'watch'));
