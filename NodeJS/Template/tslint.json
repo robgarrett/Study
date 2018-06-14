@@ -5,7 +5,8 @@
       true,
       "check-space"
     ],
-    "curly": true,
+    "no-any":true,
+    "curly": false,
     "eofline": true,
     "forin": true,
     "indent": [
