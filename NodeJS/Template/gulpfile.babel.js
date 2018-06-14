@@ -55,7 +55,7 @@ gulp.task('compile:typescript', function doWork() {
     .pipe(flatten())
     .pipe(gulp.dest(paths.tscripts.dest));
 });
-gulp.task('build', gulp.series('clean', /*'nsp:check',*/ 'compile:typescript'));
+gulp.task('build', gulp.series('clean', /*'nsp:check',*/ 'lint', 'compile:typescript'));
 
 // ** Serve **
 gulp.task('serve', function doWork(done) {
@@ -99,4 +99,4 @@ gulp.task('browser-sync', gulp.series("serve", function doWork() {
 }));
 
 // ** Default ** //
-gulp.task('default', gulp.series('lint', 'build', 'browser-sync', 'watch'));
+gulp.task('default', gulp.series('build', 'browser-sync', 'watch'));
