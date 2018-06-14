@@ -29,7 +29,12 @@ export default {
       // Use ts-loader to transpile TS when called from express.
       {
         test: /\.tsx?$/,
-        use: [{ loader: "ts-loader" }],
+        use: ["ts-loader"],
+      },
+      // Use css loaders for embedded css.
+      {
+        test: /\.css$/,
+        use: ["style-loader", "css-loader"],
       },
     ],
   },
