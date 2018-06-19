@@ -64,7 +64,7 @@ gulp.task('serve', function doWork(done) {
   // Use nodemon to run express app.
   // Restart our server whenever code changes.
   return nodemon({
-    script: "app/lib/serve.js",
+    script: "app/lib/srcServe.js",
     ignore: ["node_modules/"]
   }).on("start", function () {
     if (!called) {
