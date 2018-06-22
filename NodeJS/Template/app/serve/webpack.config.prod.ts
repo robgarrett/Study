@@ -4,17 +4,29 @@ import * as webpack from "webpack";
 export default {
   mode: "production",
   devtool: "source-map",
-  entry: [
+  entry: {
     // __dirname is app/lib.
-    path.resolve(__dirname, "../src/index.ts"),
-  ],
+    vendor: path.resolve(__dirname, "../src/vendor.ts"),
+    main: path.resolve(__dirname, "../src/index.ts"),
+  },
+  optimization: {
+    splitChunks: {
+      cacheGroups: {
+        commons: {
+          test: /[\\/]node_modules[\\/]/,
+          name: "vendor",
+          chunks: "all",
+        },
+      },
+    },
+  },
   target: "web",
   // Production webpack is not used via middleware,
   // so we generate the files needed in dist folder.
   output: {
     publicPath: "/",
     path: path.join(__dirname, "../dist"),
-    filename: "bundle.js",
+    filename: "[name].js",
   },
   plugins: [
     // Create source maps with our bundle.
