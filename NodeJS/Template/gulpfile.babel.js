@@ -69,19 +69,22 @@ gulp.task("serveSrc", function doWork(done) {
   }).on("start", function () {
     if (!called) {
       called = true;
-      done();
+      // Wait for the main load to complete.
+      setTimeout(function () {
+        done();
+      }, 2000);
     }
   }).on("restart", function () {
     // When nodemon restarts the server, instruct browsersync to reload.
     debug.log("nodemon detected change, calling browsersync to reload");
     setTimeout(function () {
-      browserSync.reload({ stream: false})
-    }, 1000);
+      browserSync.reload({ stream: false })
+    }, 2000);
   });
 });
 
 // ** Watching **
-gulp.task("watch", function doWork(){
+gulp.task("watch", function doWork() {
   // If src files change, recompile them.
   // This will cause new app/lib/*.js files, and nodemon will pick these up and
   // restart express.
