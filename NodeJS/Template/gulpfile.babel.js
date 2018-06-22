@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 import path from "path";
 import gulp from "gulp";
@@ -18,33 +18,33 @@ var node;
 var paths = {
   tscripts: {
     src: [
-      'app/src/**/*.ts',
-      'app/serve/**/*.ts'
+      "app/src/**/*.ts",
+      "app/serve/**/*.ts"
     ],
-    dest: 'app/lib'
+    dest: "app/lib"
   }
 };
 
 // ** Clean ** /
-gulp.task('clean', function doWork() {
+gulp.task("clean", function doWork() {
   return gulp.src([
-    paths.tscripts.dest, '/*.js',
-    paths.tscripts.dest, '/*.js.map'
+    paths.tscripts.dest, "/*.js",
+    paths.tscripts.dest, "/*.js.map"
   ], { read: false, allowEmpty: true }).pipe(clean());
 });
 
 // ** Linting ** //
-gulp.task('lint', function doWork() {
+gulp.task("lint", function doWork() {
   return gulp.src(paths.tscripts.src)
     .pipe(tslint({ formatter: "verbose" }))
     .pipe(tslint.report());
 });
 
 // ** Compilation ** //
-gulp.task('nsp:check', function doWork(done) {
-  gulpNSP({ package: __dirname + '/package.json' }, done);
+gulp.task("nsp:check", function doWork(done) {
+  gulpNSP({ package: __dirname + "/package.json" }, done);
 });
-gulp.task('compile:typescript', function doWork() {
+gulp.task("compile:typescript", function doWork() {
   var project = tsc.createProject("tsconfig.json", { declaration: true });
   var built = gulp.src(paths.tscripts.src)
     .pipe(sourcemaps.init())
@@ -55,10 +55,10 @@ gulp.task('compile:typescript', function doWork() {
     .pipe(flatten())
     .pipe(gulp.dest(paths.tscripts.dest));
 });
-gulp.task('build', gulp.series('clean', /*'nsp:check',*/ 'lint', 'compile:typescript'));
+gulp.task("build", gulp.series("clean", /*"nsp:check",*/ "lint", "compile:typescript"));
 
 // ** Serve **
-gulp.task('serve', function doWork(done) {
+gulp.task("serveSrc", function doWork(done) {
   // Launch express (using nodemon to monitor app/lib/*.js).
   var called = false;
   // Use nodemon to run express app.
@@ -81,15 +81,15 @@ gulp.task('serve', function doWork(done) {
 });
 
 // ** Watching **
-gulp.task('watch', function doWork(){
+gulp.task("watch", function doWork(){
   // If src files change, recompile them.
   // This will cause new app/lib/*.js files, and nodemon will pick these up and
   // restart express.
-  return gulp.watch(paths.tscripts.src, gulp.series('compile:typescript'));
+  return gulp.watch(paths.tscripts.src, gulp.series("compile:typescript"));
 });
 
 // ** Browser Sync **
-gulp.task('browser-sync', gulp.series("serve", function doWork() {
+gulp.task("browser-sync", gulp.series("serveSrc", function doWork() {
   // Initialize browser sync.
   browserSync({
     proxy: "localhost:3000",  // local node app address
@@ -99,4 +99,5 @@ gulp.task('browser-sync', gulp.series("serve", function doWork() {
 }));
 
 // ** Default ** //
-gulp.task('default', gulp.series('build', 'browser-sync', 'watch'));
+gulp.task("serve",gulp.series("build", "browser-sync", "watch"));
+gulp.task("default", gulp.series("serve"));
