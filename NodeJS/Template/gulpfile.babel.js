@@ -3,6 +3,7 @@
 import path from "path";
 import gulp from "gulp";
 import tsc from "gulp-typescript";
+import { exec } from "child_process";
 import gulpNSP from "gulp-nsp";
 import debug from "gulp-debug";
 import tslint from "gulp-tslint";
@@ -11,6 +12,11 @@ import clean from "gulp-clean";
 import sourcemaps from "gulp-sourcemaps";
 import browserSync from "browser-sync";
 import nodemon from "nodemon";
+import webpack from "webpack";
+import chalk from "chalk";
+
+// Development unless told otherwise.
+process.env.NODE_ENV = "development";
 
 // Running node instance.
 var node;
@@ -21,15 +27,17 @@ var paths = {
       "app/src/**/*.ts",
       "app/serve/**/*.ts"
     ],
-    dest: "app/lib"
+    dest: "app/lib",
+    package: "app/dist"
   }
 };
 
 // ** Clean ** /
 gulp.task("clean", function doWork() {
   return gulp.src([
-    paths.tscripts.dest, "/*.js",
-    paths.tscripts.dest, "/*.js.map"
+    paths.tscripts.dest + "/*.js",
+    paths.tscripts.dest + "/*.js.map",
+    paths.tscripts.package + "/*"
   ], { read: false, allowEmpty: true }).pipe(clean());
 });
 
@@ -76,7 +84,6 @@ gulp.task("serveSrc", function doWork(done) {
     }
   }).on("restart", function () {
     // When nodemon restarts the server, instruct browsersync to reload.
-    debug.log("nodemon detected change, calling browsersync to reload");
     setTimeout(function () {
       browserSync.reload({ stream: false })
     }, 2000);
@@ -99,6 +106,42 @@ gulp.task("browser-sync", gulp.series("serveSrc", function doWork() {
     port: 5000,  // use *different* port than above
     notify: true
   });
+}));
+
+// ** Packaging **
+gulp.task("package", gulp.series("build", function doWork(done) {
+  // Call web pack to package distribution build.
+  process.env.NODE_ENV = "production";
+  const config = require("./app/lib/webpack.config.prod");
+  return new Promise(resolve => {
+    // Call web pack.
+    webpack(config.default, (err, stats) => {
+      if (err) {
+        // Fatal Error, stop here.
+        console.log(chalk.red('Webpack', err));
+        return 1;
+      }
+      const jsonStats = stats.toJson();
+      if (jsonStats.hasErrors) {
+        return jsonStats.errors.map(error => console.log(chalk.red(error)));
+      }
+      if (jsonStats.hasWarnings) {
+        console.log(chalk.yellow("Webpack generated the following errors:"));
+        return jsonStats.warnings.map(warning => console.log(chalk.yellow(warning)));
+      }
+      console.log(`Webpack stats: ${stats}`);
+      console.log(chalk.green("App packaged in app/dist folder"));
+      return 0;
+    });
+    // Signal completion.
+    done();
+  });
+}));
+
+// ** Production Serve **
+gulp.task("serve:dist", gulp.series("package", function doWork(done) {
+  exec("node " + paths.tscripts.dest + "/distServe.js");
+  done();
 }));
 
 // ** Default ** //

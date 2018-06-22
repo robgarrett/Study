@@ -3,6 +3,7 @@ import * as webpack from "webpack";
 
 export default {
   mode: "development",
+  devtool: "inline-source-map",
   entry: [
     // __dirname is app/lib.
     path.resolve(__dirname, "../src/index.ts"),
@@ -19,11 +20,12 @@ export default {
   plugins: [
     // Create source maps with our bundle.
     new webpack.SourceMapDevToolPlugin({}),
+    // Process HTML.
+    new (require("html-webpack-plugin"))({
+      template: path.resolve(__dirname, "../src/index.html"),
+      inject: true,
+    }),
   ],
-  resolve: {
-    // Resolve extensions.
-    extensions: [".ts", ".tsx", ".js"],
-  },
   module: {
     rules: [
       // Use ts-loader to transpile TS when called from express.
@@ -35,6 +37,16 @@ export default {
       {
         test: /\.css$/,
         use: ["style-loader", "css-loader"],
+      },
+      // Generate HTML.
+      {
+        test: /\.html$/,
+        use: [
+          {
+            loader: "html-loader",
+            options: { minimize: false },
+          },
+        ],
       },
     ],
   },

@@ -4,6 +4,13 @@ import * as path from "path";
 const port = 3000;
 const app = express();
 
+// Use compression in production.
+app.use(require("compression"));
+
+// Serve static files from the dist folder.
+app.use(express.static("dist"));
+
+// Root entry.
 app.get("/", function(req, res) {
   res.sendFile(path.join(__dirname, "../dist/index.html"));
 });

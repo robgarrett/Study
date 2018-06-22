@@ -2,28 +2,29 @@ import * as path from "path";
 import * as webpack from "webpack";
 
 export default {
-  mode: "development",
+  mode: "production",
+  devtool: "source-map",
   entry: [
     // __dirname is app/lib.
     path.resolve(__dirname, "../src/index.ts"),
   ],
-  target: "web",  // As opposed to node
-  // Webpack won't actually create any files,
-  // when we use the webpack-dev-middleware
-  // but we want to simulate the output created
-  // in memory.
+  target: "web",
+  // Production webpack is not used via middleware,
+  // so we generate the files needed in dist folder.
   output: {
     publicPath: "/",
+    path: path.join(__dirname, "../dist"),
     filename: "bundle.js",
   },
   plugins: [
     // Create source maps with our bundle.
     new webpack.SourceMapDevToolPlugin({}),
+    // Process HTML.
+    new (require("html-webpack-plugin"))({
+      template: path.resolve(__dirname, "../src/index.html"),
+      inject: true,
+    }),
   ],
-  resolve: {
-    // Resolve extensions.
-    extensions: [".ts", ".tsx", ".js"],
-  },
   module: {
     rules: [
       // Use ts-loader to transpile TS when called from express.
@@ -35,6 +36,15 @@ export default {
       {
         test: /\.css$/,
         use: ["style-loader", "css-loader"],
+      },
+      {
+        test: /\.html$/,
+        use: [
+          {
+            loader: "html-loader",
+            options: { minimize: true },
+          },
+        ],
       },
     ],
   },
