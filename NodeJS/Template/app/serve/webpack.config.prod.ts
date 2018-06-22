@@ -26,9 +26,13 @@ export default {
   output: {
     publicPath: "/",
     path: path.join(__dirname, "../dist"),
-    filename: "[name].js",
+    filename: "[name].[chunkhash].js",
   },
   plugins: [
+    // Separate CSS for production.
+    new (require("extract-text-webpack-plugin"))("[name].[chunkhash].css"),
+    // Use Cache Busting for file updates.
+    new (require("webpack-md5-hash"))(),
     // Create source maps with our bundle.
     new webpack.SourceMapDevToolPlugin({}),
     // Process HTML.
@@ -59,7 +63,11 @@ export default {
       // Use css loaders for embedded css.
       {
         test: /\.css$/,
-        use: ["style-loader", "css-loader"],
+        use: (require("extract-text-webpack-plugin")).extract(
+          {
+            fallback: "style-loader",
+            use: ["css-loader"],
+          }),
       },
       {
         test: /\.html$/,
