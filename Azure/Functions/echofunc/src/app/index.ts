@@ -1,3 +1,3 @@
 
-// Import CSS, webpack will handle import.
-import "./index.css";
+// Main entry file.
+console.log("Main entry file called");

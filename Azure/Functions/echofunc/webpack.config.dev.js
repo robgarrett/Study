@@ -22,11 +22,6 @@ module.exports = {
   plugins: [
     // Create source maps with our bundle.
     new webpack.SourceMapDevToolPlugin({}),
-    // Process HTML.
-    new (require("html-webpack-plugin"))({
-      template: path.resolve(__dirname, "src/app/index.html"),
-      inject: true,
-    }),
   ],
   node: {
     console: false
@@ -37,21 +32,6 @@ module.exports = {
       {
         test: /\.tsx?$/,
         use: ["ts-loader"],
-      },
-      // Use css loaders for embedded css.
-      {
-        test: /\.css$/,
-        use: ["style-loader", "css-loader"],
-      },
-      // Generate HTML.
-      {
-        test: /\.html$/,
-        use: [
-          {
-            loader: "html-loader",
-            options: { minimize: false },
-          },
-        ],
       },
     ],
   },
