@@ -3,15 +3,12 @@
 import path from "path";
 import gulp from "gulp";
 import tsc from "gulp-typescript";
-import { exec } from "child_process";
 import tslint from "gulp-tslint";
 import clean from "gulp-clean";
 import rename from "gulp-rename";
 import mocha from "gulp-mocha";
 import sourcemaps from "gulp-sourcemaps";
 import nodemon from "gulp-nodemon";
-import webpack from "webpack";
-import chalk from "chalk";
 
 // Development unless told otherwise.
 process.env.NODE_ENV = "development";
@@ -26,16 +23,14 @@ var paths = {
       "src/**/*.ts",
     ],
     destDir: "lib",
-    packageDir: "dist",
-    serveDir: "lib/serve",
+    appDir: "lib/app"
   }
 };
 
 // ** Clean ** /
 gulp.task("clean", function doCleanWork() {
   return gulp.src([
-    paths.tscripts.destDir,
-    paths.tscripts.packageDir
+    paths.tscripts.destDir
   ], { read: false, allowEmpty: true }).pipe(clean());
 });
 
@@ -71,7 +66,7 @@ gulp.task("serveSrc", function doServeSrcWork(done) {
   // Use nodemon to run express app.
   // Restart our server whenever code changes.
   return nodemon({
-    script: path.resolve(paths.tscripts.serveDir, "devServe.js"),
+    script: path.resolve(paths.tscripts.appDir, "index.js"),
     ignore: ["node_modules/"],
     // Source files to watch that'll cause reload.
     watch: ["src"],
@@ -110,42 +105,6 @@ gulp.task("watch", function doWatchWork() {
   // If src files change, recompile them.
   return gulp.watch(paths.tscripts.srcFiles, gulp.series("compile:typescript"));
 });
-
-// ** Packaging **
-gulp.task("package", gulp.series("build", function doPackageWork(done) {
-  // Call web pack to package distribution build.
-  process.env.NODE_ENV = "production";
-  const config = require("./webpack.config.prod");
-  return new Promise(resolve => {
-    // Call web pack.
-    webpack(config, (err, stats) => {
-      if (err) {
-        // Fatal Error, stop here.
-        console.log(chalk.red('Webpack', err));
-        return 1;
-      }
-      const jsonStats = stats.toJson();
-      if (jsonStats.hasErrors) {
-        return jsonStats.errors.map(error => console.log(chalk.red(error)));
-      }
-      if (jsonStats.hasWarnings) {
-        console.log(chalk.yellow("Webpack generated the following errors:"));
-        return jsonStats.warnings.map(warning => console.log(chalk.yellow(warning)));
-      }
-      console.log(`Webpack stats: ${stats}`);
-      console.log(chalk.green("App packaged in dist folder"));
-      return 0;
-    });
-    // Signal completion.
-    done();
-  });
-}));
-
-// ** Production Serve **
-gulp.task("serve:dist", gulp.series("package", function doProdServeWork(done) {
-  exec("node " + path.resolve(paths.tscripts.serveDir, "prodServe.js"));
-  done();
-}));
 
 // ** Unit Tests ** //
 gulp.task("run-tests", function doTestsWork() {
