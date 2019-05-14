@@ -7,6 +7,7 @@ import tsc from "gulp-typescript";
 import tslint from "gulp-tslint";
 import clean from "gulp-clean";
 import mocha from "gulp-mocha";
+import zip from "gulp-zip";
 import sourcemaps from "gulp-sourcemaps";
 
 // Development unless told otherwise.
@@ -21,6 +22,7 @@ var paths = {
     srcFiles: ["**/*.ts", "!node_modules/**/*"],
     funcJson: ["**/function.json", "!node_modules/**/*"],
     destDir: "dist",
+    destFiles: ["dist/**/*.js", "!dist/**/*.test.js", "host.json", "local.settings.json", "package.json"],
   }
 };
 
@@ -75,6 +77,14 @@ gulp.task("run-tests", function doTestsWork() {
     }));
 });
 gulp.task("test", gulp.series("build", "run-tests"));
+
+// ** Package ** //
+gulp.task("package", gulp.series("build", function doPackageWork() {
+  return gulp.src(paths.tscripts.destFiles).
+    pipe(zip("deployment.zip")).
+    pipe(gulp.dest(paths.tscripts.destDir)).
+    pipe(debug());
+}));
 
 // ** Default ** //
 gulp.task("default", gulp.series("build"));
