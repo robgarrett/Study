@@ -8,7 +8,8 @@
   "scripts": {
     "start": "gulp run",
     "build": "gulp build",
-    "lint": "gulp lint"
+    "lint": "gulp lint",
+    "debug": "gulp debug"
   },
   "engines": {
     "node": ">=8.11.3"

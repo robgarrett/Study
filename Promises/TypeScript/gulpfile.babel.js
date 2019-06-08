@@ -47,13 +47,16 @@ gulp.task("compile:typescript", function doCompileWork() {
     .pipe(sourcemaps.init())
     .pipe(project());
   return built.js
-    // Write inline source maps.
+    .pipe(sourcemaps.mapSources(function (sourcePath) {
+      // Make sure the source path is correct.
+      return '../' + sourcePath;
+    }))
     .pipe(sourcemaps.write())
     .pipe(gulp.dest(paths.tscripts.destDir));
 });
 gulp.task("build", gulp.series("clean", "lint", "compile:typescript"));
 
-// ** Rub **
+// ** Run **
 gulp.task("doRun", function doRunWork() {
   return run("node " + path.join(paths.tscripts.appDir, "index.js")).exec();
 });
