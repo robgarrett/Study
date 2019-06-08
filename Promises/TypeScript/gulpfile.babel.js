@@ -54,7 +54,7 @@ gulp.task("compile:typescript", function doCompileWork() {
 gulp.task("build", gulp.series("clean", "lint", "compile:typescript"));
 
 // ** Rub **
-gulp.task("doRun", function doRunWork(done) {
+gulp.task("doRun", function doRunWork() {
   return run("node " + path.join(paths.tscripts.appDir, "index.js")).exec();
 });
 

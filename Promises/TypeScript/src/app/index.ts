@@ -1,6 +1,6 @@
 
 abstract class App {
-  public static async main() {
+  public static main() {
     console.log("Hello World!");
   }
 }
