@@ -1,5 +1,8 @@
-# Base Image.
-FROM node:lts
+# Base Image (SPfx doesn't support 11.x and 12.0)
+FROM node:10.20.0
+
+# Expose ports
+EXPOSE 5432 4321 35729
 
 # Create a persisted volume.
 VOLUME /usr/app/spfx
