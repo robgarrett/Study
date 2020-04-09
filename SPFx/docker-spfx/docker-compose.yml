@@ -1,0 +1,13 @@
+version: '3.5'
+services:
+  spfx-dev:
+    volumes:
+      - .:/usr/app/spfx
+    image: spfx-dev:latest
+    stdin_open: true
+    tty: true
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: spfx-dev
+    restart: always
