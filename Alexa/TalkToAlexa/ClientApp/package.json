@@ -1,0 +1,29 @@
+{
+  "name": "talktoalexa",
+  "version": "1.0.0",
+  "description": "Register virtual Alexa device and sent text commands as text.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/robgarrett/TalkToAlexa.git"
+  },
+  "author": "Rob Garrett",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/robgarrett/TalkToAlexa/issues"
+  },
+  "homepage": "https://github.com/robgarrett/TalkToAlexa#readme",
+  "devDependencies": {
+    "@types/gulp-babel": "^6.1.29",
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.3",
+    "babel-eslint": "^10.0.2",
+    "babel-preset-env": "^1.7.0",
+    "child_process": "^1.0.2",
+    "gulp": "^4.0.2",
+    "gulp-babel": "^8.0.0",
+    "gulp-dotnet-cli": "^1.1.0",
+    "gulp-newer": "^1.4.0",
+    "gulp-rename": "^1.4.0",
+    "gulp-util": "^3.0.8"
+  }
+}
