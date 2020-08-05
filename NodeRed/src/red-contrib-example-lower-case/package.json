@@ -1,0 +1,15 @@
+{
+  "name": "red-contrib-example-lower-case",
+  "version": "1.0.0",
+  "description": "Example node-red package.",
+  "main": "index.js",
+  "scripts": {
+  },
+  "author": "Rob Garrett",
+  "license": "UNLICENSED",
+  "node-red": {
+    "nodes": {
+      "lower-case": "lower-case.js"
+    }
+  }
+}
