@@ -6,9 +6,12 @@
         "noImplicitAny": false,
         "strictNullChecks": true,
         "jsx": "react",
-        "sourceMap": true,
-        "allowJs": true
+        "sourceMap": true
     },
+    "include": [
+        "src/app/scripts",
+        "src/*.d.ts"
+    ],
     "exclude": [
         "node_modules"
     ]

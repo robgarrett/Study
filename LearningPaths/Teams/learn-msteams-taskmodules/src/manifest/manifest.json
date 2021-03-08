@@ -26,7 +26,7 @@
   "configurableTabs": [],
   "staticTabs": [
     {
-      "entityId": "8c4f1e54-06eb-4100-8395-79b4a5479907",
+      "entityId": "4681670e-5244-4ca7-a6f6-5055dea9b3da",
       "name": "YouTube Player 1",
       "contentUrl": "https://{{HOSTNAME}}/youTubePlayer1Tab/?name={loginHint}&tenant={tid}&theme={theme}",
       "scopes": [
