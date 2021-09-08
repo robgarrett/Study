@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Task01
+namespace BinaryGaps
 {
     class Program
     {
@@ -9,7 +9,8 @@ namespace Task01
             Console.WriteLine(solution(1041));
         }
 
-        private static int solution(int N) {
+        private static int solution(int N)
+        {
             string nStr = Convert.ToString(N, 2);
             int gapLen = 0;
             var gaps = nStr.Split('1');
