@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Example2
+namespace CyclicRotation
 {
     class Program
     {
