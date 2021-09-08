@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Example1
+namespace BinaryGap
 {
     // you can also use other imports, for example:
     // using System.Collections.Generic;
