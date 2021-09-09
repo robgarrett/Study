@@ -6,14 +6,14 @@ namespace CyclicRotation
     {
         static void Main(string[] args)
         {
-            render(solution(new int[] {1, 2, 3, 4, 5}, 8));
-            render(solution(new int[] {5, -1000}, 1));
+            render(solution(new int[] { 1, 2, 3, 4, 5 }, 8));
+            render(solution(new int[] { 5, -1000 }, 1));
         }
 
         private static void render(int[] A)
         {
             if (null == A) return;
-            for (var i = 0 ; i < A.Length; i++)
+            for (var i = 0; i < A.Length; i++)
                 Console.Write(A[i] + " ");
             Console.WriteLine();
         }
@@ -25,10 +25,10 @@ namespace CyclicRotation
             int[] result = new int[A.Length];
             int chunk = K % A.Length;
             for (var i = 0; i < A.Length; i++)
-                result[i] = (i < chunk) 
+                result[i] = (i < chunk)
                     ? A[(A.Length - chunk) + i]
                     : A[i - chunk];
             return result;
-         }
+        }
     }
 }
