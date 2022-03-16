@@ -1,13 +1,30 @@
 {
-  "name": "hello",
+  "name": "react-hello",
   "version": "1.0.0",
-  "description": "Hello World",
-  "main": "index.js",
-  "scripts": {},
+  "description": "Simple React Starter",
+  "scripts": {
+    "start": "webpack-dev-server --open --mode development",
+    "build": "webpack --mode development"
+  },
   "author": "Rob Garrett",
-  "license": "UNLICENSED",
-  "dependencies": {
-    "react": "16.4.2",
-    "react-dom": "16.4.2"
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.17.7",
+    "@babel/plugin-proposal-class-properties": "^7.16.7",
+    "@babel/preset-env": "^7.16.11",
+    "@babel/preset-react": "^7.16.7",
+    "babel-loader": "^8.2.3",
+    "css-loader": "^6.7.1",
+    "file-loader": "^6.2.0",
+    "html-loader": "^3.1.0",
+    "html-webpack-plugin": "^5.5.0",
+    "prop-types": "^15.8.1",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "sass-loader": "^12.6.0",
+    "style-loader": "^3.3.1",
+    "webpack": "^5.70.0",
+    "webpack-cli": "^4.9.2",
+    "webpack-dev-server": "^4.7.4"
   }
 }
