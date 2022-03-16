@@ -1,12 +1,14 @@
-const HtmlWebPackPlugin = require("html-webpack-plugin");
-const path = require("path");
+import HtmlWebPackPlugin from "html-webpack-plugin";
+import ESLintPlugin from "eslint-webpack-plugin";
+import { CleanWebpackPlugin } from "clean-webpack-plugin";
+import path from "path";
 
-module.exports = {
+const webpackConfig = {
     // Context is the root of the project
     context: __dirname,
     entry: "./src/index.js",
     output: {
-    // Output is the dist folder.
+        // Output is the dist folder.
         path: path.resolve(__dirname, "dist"),
         filename: "main.js",
         publicPath: "/"
@@ -70,6 +72,10 @@ module.exports = {
         ]
     },
     plugins: [
+        new CleanWebpackPlugin({
+            verbose: true
+        }),
+        new ESLintPlugin(),
         new HtmlWebPackPlugin({
             // Template and output
             template: "./public/index.html",
@@ -77,3 +83,5 @@ module.exports = {
         })
     ]
 };
+
+export default webpackConfig;
