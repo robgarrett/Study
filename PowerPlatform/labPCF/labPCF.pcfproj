@@ -9,7 +9,7 @@
 
   <PropertyGroup>
     <Name>labPCF</Name>
-    <ProjectGuid>2eb685cc-2a28-40c7-a0ce-fc086a6bee31</ProjectGuid>
+    <ProjectGuid>1dd74faa-0869-44d1-8257-aaacc8ca0253</ProjectGuid>
     <OutputPath>$(MSBuildThisFileDirectory)out\controls</OutputPath>
   </PropertyGroup>
 
