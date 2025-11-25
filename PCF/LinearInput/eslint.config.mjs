@@ -35,6 +35,8 @@ export default [
 
     "ignores": [
       "eslint.config.mjs",
+      "serve.js",
+      "webpack.config.js"
     ],
 
     rules: {
